@@ -1,0 +1,8 @@
+.maindiv {
+  background-image: url(./orange_background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+input:focus {
+  outline: none;
+}

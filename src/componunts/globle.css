@@ -1,0 +1,20 @@
+.icons {
+  @apply p-1 text-[30px];
+}
+#main {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.postcard {
+  background-color: rgb(255, 255, 255);
+  width: 400px;
+  border: 1px solid white;
+}
+.icons {
+  display: flex;
+  height: auto;
+  background-color: rgb(255, 255, 255);
+}
