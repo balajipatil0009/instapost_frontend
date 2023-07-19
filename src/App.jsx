@@ -9,7 +9,7 @@ import Resister from "./componunts/Resister";
 
 const router = createBrowserRouter([
   {
-    path:"/",
+    path:"/instapost-frontend.vercel.app",
     element:<Home/>
   },{
     path:"/login",
