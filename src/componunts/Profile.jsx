@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 function Profile() {
   const[token, setToken, removeToken] = useCookies(['token']);
   const navigate = useNavigate();
-  const [loading, setLoading]= useState(true);
+  const [loading, setLoading]= useState(false);
   const [data, setData] = useState({email:"",posts:[],caption:""})
   const [img, setImg] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqrBsDzi5IlYCRcB38Z_w0nzc5l-yIKCq5WA&usqp=CAU");
 
@@ -15,6 +15,7 @@ function Profile() {
   }
 
   const getProfiile = async() =>{
+    setLoading(true);
     await axios.get('/home').then((res)=>{
       setLoading(false);
       switch(res.status){
