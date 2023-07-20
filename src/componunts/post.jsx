@@ -8,6 +8,7 @@ import { BsThreeDots } from "react-icons/bs";
 import axios from "../modules/axios";
 
 function posts() {
+  const [loading, setloading]= useState(true);
   const [posts, setPosts] = useState([]);
   const [like, setlike]= useState();
   const [data, setData] = useState({email:""})
@@ -15,6 +16,7 @@ function posts() {
 
   const getPosts = async() =>{
     await axios.get('/sendPosts').then((res)=>{
+      setloading(false);
       const ress = res.data;
       setPosts(res.data);
     })
@@ -56,8 +58,22 @@ function posts() {
     getPosts();
    },[]);
   return (
-    <>
-      <div id="main">
+    <>{loading?<><div className="h-[300px]">
+    <div className="border border-blue-300 shadow rounded-xl p-4 max-w-sm w-full mx-auto h-full">
+  <div className="animate-pulse flex space-x-4">
+    <div className="rounded-full bg-slate-200 h-10 w-10"></div>
+    <div className="flex-1 space-y-6 py-1">
+      <div className="h-2 bg-slate-200 rounded"></div>
+      <div className="space-y-3">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="h-2 bg-slate-200 rounded col-span-2"></div>
+          <div className="h-2 bg-slate-200 rounded col-span-1"></div>
+        </div>
+        <div className="h-2 bg-slate-200 rounded"></div>
+      </div>
+    </div>
+  </div></div>
+</div></>:<div id="main">
         {posts.map((item) => (
           <div className="postcard border-b-[gray] pb-2" key={item._id}>
             <div className="flex justify-between items-center">
@@ -109,7 +125,7 @@ function posts() {
         ))}
       </div>
 
-   
+    }
     </>
   );
 }

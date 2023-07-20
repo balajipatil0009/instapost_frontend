@@ -1,14 +1,15 @@
 import React, { useState} from "react";
 import "./Resister.css";
-import { RiLockPasswordLine } from "react-icons/ri";
-import { RiUserAddLine } from "react-icons/ri";
+import { RiLockPasswordLine, RiUserAddLine,RiLockPasswordFill} from "react-icons/ri";
+import {BiObjectsHorizontalLeft} from "react-icons/bi"
 import { SiGmail } from "react-icons/si";
-import { RiLockPasswordFill, RiClosedCaptioningFill } from "react-icons/ri";
+import {ImSpinner4} from "react-icons/im"
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "../modules/axios"
 import { useNavigate } from "react-router-dom";
 
 const Resister = () => {
+  const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
   const[user, setUser]=useState({email:"", password:"",cpass:"",caption:""})
 let name, value;
@@ -19,6 +20,7 @@ const handleChange = (e) =>{
   setUser({...user,[name]:value})
 }
 const sendUser = (e) =>{
+  setLoading(true)
   e.preventDefault();
   const{email, password} = user;
   if(password.length <8){
@@ -26,11 +28,13 @@ const sendUser = (e) =>{
       position: toast.POSITION.TOP_CENTER,
       toastId: "passLen"
     })
+    setLoading(false)
   }
    else{
   if(user.password === user.cpass){
        if(user.password && user.email){
         axios.post(`/resister`,user).then((res)=>{
+          setLoading(false);
        // console.log(res);
           switch(res.status){
             case 205: {
@@ -59,7 +63,7 @@ const sendUser = (e) =>{
               break;
             }
           }
-          setUser({email:"",password:"",cpass:""});
+          setUser({email:"",password:"",cpass:"",caption:""});
         }).catch((err)=>{
           toast.error('something went wrong try after sometime',{
             position: toast.POSITION.TOP_CENTER,
@@ -101,8 +105,11 @@ const sendUser = (e) =>{
           <div className="min-h-[510px] w-[500px]m-[0px] flex justify-center">
             <div className="w-[70%]">
               <div className="flex justify-center mt-[20%]">
-                <div className="">
-                  <RiUserAddLine size={80} style={{color:"white"}} />
+                <div>
+                {loading?
+               <ImSpinner4 size={70} className="animate-spin text-gray-400"/>
+                :
+                  <RiUserAddLine size={80} style={{color:"white"}} />}
                 </div>
               </div>
               <form onSubmit={sendUser}>
@@ -134,12 +141,13 @@ const sendUser = (e) =>{
                 name="cpass"/>
               </div>
               <div className="w-[100%] mt-[10%] border-b-2 rounded flex">
-                <RiClosedCaptioningFill
+                <BiObjectsHorizontalLeft
                 size={25}
                 className="m-1 text-white"
                 />
                 <textarea rows={2} 
                   type="text"
+                  placeholder="Write Bio For Your Account"
                   className="h-[30%] bg-transparent w-[90%] ml-[3%] text-white focus: border-none" onChange={handleChange} value={user.caption}
                 name="caption"/>
               </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {IoIosImages} from "react-icons/io"
+import {ImSpinner4} from "react-icons/im"
 import { storage } from "../modules/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid"
@@ -10,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 function AddPost(){
     const Navigate = useNavigate();
       const [image, setImage] = useState(null);
+      const [loading, setLoading] = useState(false);
       const [posts, setPosts] = useState({imgUrl:"", caption:""})
       var value,name;
      const handleChange = (e) =>{
@@ -21,6 +23,7 @@ function AddPost(){
      }
 
       const uploadImage = async()=>{
+        setLoading(true);
         if(image==null){
          toast.error('please select image',{
           position: toast.POSITION.TOP_CENTER,
@@ -32,7 +35,8 @@ function AddPost(){
          const url = await getDownloadURL(imgLoc.ref);
             if(url != ""){
               axios.post('/addPost',({img: url, caption: posts.caption})).then((res)=>{
-                   switch(res.status){
+                setLoading(false);
+                switch(res.status){
                     case 200:{
                       Navigate('/');
                       break;
@@ -76,7 +80,9 @@ function AddPost(){
       <div className="w-screen h-screen bg-gradient-to-r from-red-400 via-gray-300 to-blue-500  flex justify-center items-center">
       <div className="w-80 h-96 border border-black bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black rounded-xl"> 
       <div className="flex justify-center h-1/3 items-center">
-        <IoIosImages className="text-white" size={80} />
+      {loading?
+       <ImSpinner4 size={70} className="animate-spin text-gray-400"/>
+      :<IoIosImages className="text-white" size={80} />}
       </div> 
       <div className="item-center h-1/2 flex items-center">
       <div>
@@ -90,7 +96,8 @@ function AddPost(){
             </div>
             <button onClick={uploadImage} >add post</button>
       </div></div> 
-       </div>   </div>
+       </div> 
+      </div>
        <ToastContainer/>
         </>
     )

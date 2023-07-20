@@ -1,6 +1,7 @@
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine, RiUserFollowLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
+import { ImSpinner4 } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';
 import axios from "../modules/axios";
 import { useState } from "react";
@@ -8,9 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 function Login(){
-
+  const [loading, setloading]= useState(false);
   const navigate = useNavigate();
-
 const[user, setUser] = useState({email:"",password:""});
 var value, name;
 const handleChange = (e) =>{
@@ -20,6 +20,7 @@ const handleChange = (e) =>{
 }
 
 const getUser = async(e) =>{
+  setloading(true);
     e.preventDefault();
     const {gmail, password} = user;
     await axios.post('/login',user,{
@@ -28,6 +29,7 @@ const getUser = async(e) =>{
       },
       withCredentials:true
     }).then((res)=>{
+      setloading(false);
       switch(res.status){
         case 200:{
           toast.success('Verified',{
@@ -85,7 +87,10 @@ const getUser = async(e) =>{
           </div>
           <div className="h-[510px] w-[500px]m-[0px] border-black">
             <div className="w-[100%] flex justify-center mt-[20%]">
-              <RiUserFollowLine size={80} style={{ color: "white" }} />
+            {loading?
+               <ImSpinner4 size={70} className="animate-spin text-gray-400"/>
+                :<RiUserFollowLine size={80} style={{ color: "white" }} />
+             }
             </div>
             <div className="flex justify-center">
               <div className="w-[70%]">
