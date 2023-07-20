@@ -19,6 +19,7 @@ function Profile() {
        }).catch((err)=>{
         console.log(err);
        })
+    navigate('login', { replace: true });
   }
 
   const getProfiile = async() =>{
@@ -116,7 +117,6 @@ useEffect(()=>{
           </div>
           <div className="w-full flex justify-center pt-10 col-span-1" >
             <a
-       href="/login"
       onClick={logOut}
               className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold rounded-md shadow-2xl group border border-gray-400"
             >
