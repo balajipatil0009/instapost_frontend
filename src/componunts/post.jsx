@@ -96,7 +96,7 @@ function posts() {
                   <p className="text-sm text-black pt-0 mt-0">{data.email}</p>
                 </div>
               </div>
-              <BsThreeDots />
+              <BsThreeDots className="icons text-black" />
             </div>
             <div>
               <div
@@ -112,12 +112,12 @@ function posts() {
             <div className="" key={item._id}>
               <div className="icons flex justify-between h-10 ">
                 <div className="flex" onClick={(e)=>{handleLikes({id:item._id,liked:item.like});item.like=!item.like}} key={item._id}>
-                 {item.like ? <AiFillHeart className="icons" /> : <AiOutlineHeart className="icons"/>} 
-                  <FaRegComment className="icons" />
-                  <PiPaperPlaneTiltBold className="icons" />
+                 {item.like ? <AiFillHeart className="icons text-black" /> : <AiOutlineHeart className="icons text-black"/>} 
+                  <FaRegComment className="icons text-black" />
+                  <PiPaperPlaneTiltBold className="icons text-black" />
                 </div>
                 <div className="flex justify-end">
-                  <RxBookmark />
+                  <RxBookmark className="icons text-black"/>
                 </div>
               </div>
             </div>
