@@ -62,6 +62,7 @@ const getUser = async(e) =>{
         }
       }
     }).catch((err)=>{
+      setloading(false);
       toast.error('something went wrong try after sometime',{
         position: toast.POSITION.TOP_CENTER,
         toastId: "unknown"

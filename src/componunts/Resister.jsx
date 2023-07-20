@@ -65,18 +65,21 @@ const sendUser = (e) =>{
           }
           setUser({email:"",password:"",cpass:"",caption:""});
         }).catch((err)=>{
+          setLoading(false);
           toast.error('something went wrong try after sometime',{
             position: toast.POSITION.TOP_CENTER,
             toastId: "unknown"
           })
         })
        }else{
+        setLoading(false);
         toast.error('fill every field',{
           position: toast.POSITION.TOP_CENTER,
       toastId: 124
         })
        }
   }else{
+    setLoading(false);
     toast.warning('Password and Confirm password should be!', {
       position: toast.POSITION.TOP_CENTER,
       toastId: 123

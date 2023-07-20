@@ -6,8 +6,10 @@ import { PiPaperPlaneTiltBold } from "react-icons/pi";
 import { RxBookmark } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
 import axios from "../modules/axios";
+import { useCookies } from "react-cookie";
 
 function posts() {
+  const [cookie, setCookie, removeCookie]=useCookies(['token']);
   const [loading, setloading]= useState(true);
   const [posts, setPosts] = useState([]);
   const [like, setlike]= useState();
@@ -15,7 +17,7 @@ function posts() {
   const [img, setImg] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqrBsDzi5IlYCRcB38Z_w0nzc5l-yIKCq5WA&usqp=CAU");
 
   const getPosts = async() =>{
-    await axios.get('/sendPosts').then((res)=>{
+    if(cookie.token!=""){ await axios.get('/sendPosts').then((res)=>{
       setloading(false);
       const ress = res.data;
       setPosts(res.data);
@@ -23,7 +25,8 @@ function posts() {
     await axios.get('/home').then((res)=>{
       // console.log(res.data.email)
       setData({email:res.data.email});
-    })
+    })}
+   
     
   }
 
