@@ -93,7 +93,7 @@ function posts() {
                   <p className=" text-black text-sm font-bold  pb-0 mb-0">
                     {item.name}
                   </p>
-                  <p className="text-sm pt-0 mt-0">{data.email}</p>
+                  <p className="text-sm text-black pt-0 mt-0">{data.email}</p>
                 </div>
               </div>
               <BsThreeDots />
@@ -122,7 +122,7 @@ function posts() {
               </div>
             </div>
           <div>
-          <p className="font-bold">{item.caption}</p>
+          <p className="font-bold text-black">{item.caption}</p>
           </div>
           </div>
         ))}
