@@ -1,17 +1,23 @@
 import { useState , useEffect} from "react";
 import axios from "../modules/axios";
 import {useNavigate} from "react-router-dom";
-import { useCookies } from "react-cookie";
 
 function Profile() {
-  const[token, setToken, removeToken] = useCookies(['token']);
   const navigate = useNavigate();
   const [loading, setLoading]= useState(false);
   const [data, setData] = useState({email:"",posts:[],caption:""})
   const [img, setImg] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqrBsDzi5IlYCRcB38Z_w0nzc5l-yIKCq5WA&usqp=CAU");
 
-  const logOut = () =>{
-    removeToken(['token']);
+  const logOut = async() =>{
+       console.log("yes")
+      await axios.get('/logout').then((res)=>{
+        console.log(res);
+        if(res.status==200){
+          console.log("loged out");
+        }
+       }).catch((err)=>{
+        console.log(err);
+       })
   }
 
   const getProfiile = async() =>{
@@ -102,9 +108,10 @@ useEffect(()=>{
               <span className="relative">Add Post</span>
             </a>
           </div>
-          <div className="w-full flex justify-center pt-10 col-span-1" onClick={logOut}>
+          <div className="w-full flex justify-center pt-10 col-span-1" >
             <a
-              href="/resister"
+      //  href="/resister"
+      onClick={logOut}
               className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold rounded-md shadow-2xl group border border-gray-400"
             >
               <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-pink-600 via-purple-700 to-blue-400 group-hover:opacity-100"></span>
